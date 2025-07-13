@@ -1,4 +1,20 @@
-// ✅ Marca curso como completado y desbloquea correlativos
+// ✅ 1) Cargar progreso guardado al abrir
+document.addEventListener('DOMContentLoaded', () => {
+  const savedStates = JSON.parse(localStorage.getItem('courseStates')) || {};
+  Object.keys(savedStates).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.className = savedStates[id];
+      if (el.classList.contains('completed')) {
+        el.onclick = null;
+      } else if (el.classList.contains('active')) {
+        el.style.pointerEvents = 'auto';
+      }
+    }
+  });
+});
+
+// ✅ 2) Función principal para marcar completado y activar otros
 function completeAndActivate(currentId, nextIds) {
   const currentCourse = document.getElementById(currentId);
   currentCourse.classList.remove('active');
@@ -14,10 +30,21 @@ function completeAndActivate(currentId, nextIds) {
     }
   });
 
+  saveStates();
   checkAndActivateFinal();
 }
 
-// ✅ Desbloquea finales si todo está completado
+// ✅ 3) Guardar todos los estados en localStorage
+function saveStates() {
+  const courses = document.querySelectorAll('.course');
+  const states = {};
+  courses.forEach(course => {
+    states[course.id] = course.className;
+  });
+  localStorage.setItem('courseStates', JSON.stringify(states));
+}
+
+// ✅ 4) Desbloquear internados y finales si todo está aprobado
 function checkAndActivateFinal() {
   const allRequired = [
     'quimica','matematica','lengua','desempeno','biologia','introduccion',
@@ -45,5 +72,6 @@ function checkAndActivateFinal() {
       final.classList.add('active');
       final.style.pointerEvents = 'auto';
     });
+    saveStates();
   }
 }
