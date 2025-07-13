@@ -1,5 +1,3 @@
-
-// ✅ 2) Función para completar curso y desbloquear correlativos
 function completeAndActivate(currentId, nextIds) {
   const currentCourse = document.getElementById(currentId);
   currentCourse.classList.remove('active');
@@ -15,21 +13,9 @@ function completeAndActivate(currentId, nextIds) {
     }
   });
 
-  saveStates();
   checkAndActivateFinal();
 }
 
-// ✅ 3) Guardar TODOS los estados cada vez que se cambia algo
-function saveStates() {
-  const courses = document.querySelectorAll('.course');
-  const states = {};
-  courses.forEach(course => {
-    states[course.id] = course.className;
-  });
-  localStorage.setItem('courseStates', JSON.stringify(states));
-}
-
-// ✅ 4) Desbloquear los finales solo si todo está completado
 function checkAndActivateFinal() {
   const allRequired = [
     'quimica','matematica','lengua','desempeno','biologia','introduccion',
@@ -41,7 +27,7 @@ function checkAndActivateFinal() {
     'saludPublica','medicinaBasada','atencionPrimaria','tesis1','tesis2',
     'terapeutica','simulacionClinica','simulacionQuirurgica','simulacionPediatrica',
     'simulacionGineco','cuidados','casos1','casos2','cirugia','pediatria','gineco',
-    'ecografia','informatica','gerencia','filosofia'
+    'ecografia','informatica','gerencia'
   ];
 
   const allCompleted = allRequired.every(id => {
@@ -57,6 +43,5 @@ function checkAndActivateFinal() {
       final.classList.add('active');
       final.style.pointerEvents = 'auto';
     });
-    saveStates();
   }
 }
