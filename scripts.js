@@ -1,4 +1,4 @@
-// Carga el estado guardado cuando la página abre
+// ✅ 1) Restaurar estados al abrir la página
 document.addEventListener('DOMContentLoaded', () => {
   const savedStates = JSON.parse(localStorage.getItem('courseStates')) || {};
   Object.keys(savedStates).forEach(id => {
@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// Marca curso como completado y guarda
+// ✅ 2) Función para completar curso y desbloquear correlativos
 function completeAndActivate(currentId, nextIds) {
   const currentCourse = document.getElementById(currentId);
   currentCourse.classList.remove('active');
@@ -34,7 +34,7 @@ function completeAndActivate(currentId, nextIds) {
   checkAndActivateFinal();
 }
 
-// Guarda el estado de TODOS los cursos
+// ✅ 3) Guardar TODOS los estados cada vez que se cambia algo
 function saveStates() {
   const courses = document.querySelectorAll('.course');
   const states = {};
@@ -44,9 +44,19 @@ function saveStates() {
   localStorage.setItem('courseStates', JSON.stringify(states));
 }
 
+// ✅ 4) Desbloquear los finales solo si todo está completado
 function checkAndActivateFinal() {
   const allRequired = [
-    // tu lista de IDs de cursos base
+    'quimica','matematica','lengua','desempeno','biologia','introduccion',
+    'bioquimica','estadistica','redaccion','realidad','morfo1','anatomia',
+    'genetica','desarrollo','morfo2','morfo3','morfo4','inmunologia',
+    'infectologia','fisiopato1','fisiopato2','semiologiaSim','semiologia',
+    'farmacologia','apoyoDiagnostico','seguridad','nutricion','metodologia',
+    'medicinaInterna1','medicinaInterna2','medicinaInterna3','epidemiologia',
+    'saludPublica','medicinaBasada','atencionPrimaria','tesis1','tesis2',
+    'terapeutica','simulacionClinica','simulacionQuirurgica','simulacionPediatrica',
+    'simulacionGineco','cuidados','casos1','casos2','cirugia','pediatria','gineco',
+    'ecografia','informatica','gerencia','filosofia'
   ];
 
   const allCompleted = allRequired.every(id => {
