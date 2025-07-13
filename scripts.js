@@ -1,3 +1,20 @@
+// Carga el estado guardado cuando la página abre
+document.addEventListener('DOMContentLoaded', () => {
+  const savedStates = JSON.parse(localStorage.getItem('courseStates')) || {};
+  Object.keys(savedStates).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.className = savedStates[id];
+      if (el.classList.contains('completed')) {
+        el.onclick = null;
+      } else if (el.classList.contains('active')) {
+        el.style.pointerEvents = 'auto';
+      }
+    }
+  });
+});
+
+// Marca curso como completado y guarda
 function completeAndActivate(currentId, nextIds) {
   const currentCourse = document.getElementById(currentId);
   currentCourse.classList.remove('active');
@@ -13,21 +30,23 @@ function completeAndActivate(currentId, nextIds) {
     }
   });
 
+  saveStates();
   checkAndActivateFinal();
+}
+
+// Guarda el estado de TODOS los cursos
+function saveStates() {
+  const courses = document.querySelectorAll('.course');
+  const states = {};
+  courses.forEach(course => {
+    states[course.id] = course.className;
+  });
+  localStorage.setItem('courseStates', JSON.stringify(states));
 }
 
 function checkAndActivateFinal() {
   const allRequired = [
-    'quimica','matematica','lengua','desempeno','biologia','introduccion',
-    'bioquimica','estadistica','redaccion','realidad','morfo1','anatomia',
-    'genetica','desarrollo','morfo2','morfo3','morfo4','inmunologia',
-    'infectologia','fisiopato1','fisiopato2','semiologiaSim','semiologia',
-    'farmacologia','apoyoDiagnostico','seguridad','nutricion','metodologia',
-    'medicinaInterna1','medicinaInterna2','medicinaInterna3','epidemiologia',
-    'saludPublica','medicinaBasada','atencionPrimaria','tesis1','tesis2',
-    'terapeutica','simulacionClinica','simulacionQuirurgica','simulacionPediatrica',
-    'simulacionGineco','cuidados','casos1','casos2','cirugia','pediatria','gineco',
-    'ecografia','informatica','gerencia'
+    // tu lista de IDs de cursos base
   ];
 
   const allCompleted = allRequired.every(id => {
@@ -43,5 +62,6 @@ function checkAndActivateFinal() {
       final.classList.add('active');
       final.style.pointerEvents = 'auto';
     });
+    saveStates();
   }
 }
