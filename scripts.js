@@ -1,18 +1,3 @@
-// ✅ 1) Restaurar estados al abrir la página
-document.addEventListener('DOMContentLoaded', () => {
-  const savedStates = JSON.parse(localStorage.getItem('courseStates')) || {};
-  Object.keys(savedStates).forEach(id => {
-    const el = document.getElementById(id);
-    if (el) {
-      el.className = savedStates[id];
-      if (el.classList.contains('completed')) {
-        el.onclick = null;
-      } else if (el.classList.contains('active')) {
-        el.style.pointerEvents = 'auto';
-      }
-    }
-  });
-});
 
 // ✅ 2) Función para completar curso y desbloquear correlativos
 function completeAndActivate(currentId, nextIds) {
