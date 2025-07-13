@@ -1,4 +1,4 @@
-// ✅ 1) Cargar progreso guardado al abrir
+// ✅ 1) Restaurar progreso al abrir
 document.addEventListener('DOMContentLoaded', () => {
   const savedStates = JSON.parse(localStorage.getItem('courseStates')) || {};
   Object.keys(savedStates).forEach(id => {
@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// ✅ 2) Función principal para marcar completado y activar otros
+// ✅ 2) Completar curso y activar correlativos
 function completeAndActivate(currentId, nextIds) {
   const currentCourse = document.getElementById(currentId);
   currentCourse.classList.remove('active');
@@ -34,7 +34,7 @@ function completeAndActivate(currentId, nextIds) {
   checkAndActivateFinal();
 }
 
-// ✅ 3) Guardar todos los estados en localStorage
+// ✅ 3) Guardar estados
 function saveStates() {
   const courses = document.querySelectorAll('.course');
   const states = {};
@@ -44,7 +44,7 @@ function saveStates() {
   localStorage.setItem('courseStates', JSON.stringify(states));
 }
 
-// ✅ 4) Desbloquear internados y finales si todo está aprobado
+// ✅ 4) Revisar internados
 function checkAndActivateFinal() {
   const allRequired = [
     'quimica','matematica','lengua','desempeno','biologia','introduccion',
