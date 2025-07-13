@@ -1,3 +1,4 @@
+// ✅ Marca curso como completado y desbloquea correlativos
 function completeAndActivate(currentId, nextIds) {
   const currentCourse = document.getElementById(currentId);
   currentCourse.classList.remove('active');
@@ -16,6 +17,7 @@ function completeAndActivate(currentId, nextIds) {
   checkAndActivateFinal();
 }
 
+// ✅ Desbloquea finales si todo está completado
 function checkAndActivateFinal() {
   const allRequired = [
     'quimica','matematica','lengua','desempeno','biologia','introduccion',
@@ -27,7 +29,7 @@ function checkAndActivateFinal() {
     'saludPublica','medicinaBasada','atencionPrimaria','tesis1','tesis2',
     'terapeutica','simulacionClinica','simulacionQuirurgica','simulacionPediatrica',
     'simulacionGineco','cuidados','casos1','casos2','cirugia','pediatria','gineco',
-    'ecografia','informatica','gerencia'
+    'ecografia','informatica','gerencia','filosofia'
   ];
 
   const allCompleted = allRequired.every(id => {
